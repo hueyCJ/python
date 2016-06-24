@@ -1,0 +1,66 @@
+0006答案：
+#coding=utf-8
+'''
+/*************************************************************************
+功能描述    ：第 0006 题：你有一个目录，放了你一个月的日记，都是 txt，为了避免分词的问题，假设内容都是英文，请统计出你认为每篇日记最重要的词。
+创建人      : 陈剑
+创建时间    : 2016-06-24
+修订记录：
+版本号           编辑时间                        编辑人         修改描述
+1    2016-06-24        陈剑                创建
+************************************************************************* /
+'''
+import os
+word=''
+wordDir={}
+def change_resolution(path):
+    
+    for filename in os.listdir(path):
+        # rfind() 返回字符串最后一次出现的位置，如果没有匹配项则返回-1。
+        #print filename.rfind('.')
+        #获取目录下面的文件
+        filepath = os.path.join(path, filename)
+        #print 'filepath：'+filepath
+        #截取。之前的文件去匹配txt】
+        #print 1
+        if filename[:filename.rfind('.')] +'.txt'== filename:
+            wordDir={}
+            #print filename[:filename.rfind('.')] 
+            #print 2
+            print  '文件名字：'
+            print unicode(filename, "GBK")
+            f = open(filename, 'r')
+            allLines = f.readlines()
+            f.close()
+             
+            for eachLine in allLines:
+    #print 'eachLine：'+ eachLine, # suppress print’s NEWLINE
+    #eachLine.split()
+    #print str(eachLine.split())
+    
+    
+                for word in eachLine.split():#循环读取每行分隔出来的列表
+                    #print 'word: '+word
+                     #如果截取的出来的单词在字典中，就把单词数目加1，否则就添加新的单词,并给1
+                    if wordDir.has_key(word):
+                        wordDir[word]= wordDir[word]+1
+                    else:
+                        wordDir[word]=1
+            #print '文件输出：'
+            #print wordDir
+            #遍历输出 只有出现3次以上的词语才会出现
+            for k,v in wordDir.iteritems():
+                #print 3
+                if int(v)>=3:
+                    print '%s:%s' % (k, v)
+            
+            
+          
+            
+        
+        
+
+if __name__ == '__main__':#主函数
+    
+    #print os.path.abspath(os.curdir)
+    change_resolution(os.path.abspath(os.curdir))
